@@ -84,6 +84,11 @@ example.com {
 }
 ```
 
+Set `base_path = "/srvsite"` in `srvsite.toml` when you mount the site
+under a subdirectory like this, so that links, asset URLs and the AJAX
+endpoints all resolve through the prefix. Leave it `""` when serving from
+the root.
+
 ### Auto-restart while editing
 
 During development, restart on every change to a Go or TOML file:
@@ -98,6 +103,7 @@ ls *.go *.toml | entr -r ./srvsite
 | --- | --- |
 | `port` | TCP port to listen on (default `7800`). |
 | `site_title` | Rendered as `{{.SiteTitle}}` (the `<title>` and the logo). |
+| `base_path` | Optional URL prefix when served from a subdirectory (e.g. `"/srvtest"`). Leave `""` to serve from `/`. |
 | `leads_email` | Where contact-form notifications are emailed. `""` disables email. |
 | `[[pages]]` | One block per page: `url`, `name`, `page_head`, `pick_file`, optional `config`. |
 

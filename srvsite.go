@@ -66,6 +66,7 @@ type navOption struct {
 }
 type navOptionsPage struct {
 	SiteTitle  string // main title tag
+	BasePath   string // URL prefix when served under a subdirectory
 	Title      string // Active title highlighted in nav
 	Options    []navOption
 	LoggedIn   bool   // true when a valid session cookie is present
@@ -83,7 +84,7 @@ func getNavOptions(cfg SiteConfig) navOptionsPage {
 	var newOptions []navOption
 	for _, p := range cfg.Pages {
 		newOptions = append(newOptions, navOption{
-			URL:      p.URL,
+			URL:      cfg.BasePath + p.URL,
 			Name:     p.Name,
 			Active:   false,
 			PageHead: p.PageHead,
@@ -94,6 +95,7 @@ func getNavOptions(cfg SiteConfig) navOptionsPage {
 
 	return navOptionsPage{
 		SiteTitle: cfg.SiteTitle,
+		BasePath:  cfg.BasePath,
 		Title:     "Undefined", // set by drawPage using r.URL.Path
 		Options:   newOptions,
 	}
@@ -114,6 +116,17 @@ func drawPage(w http.ResponseWriter, r *http.Request, cfg SiteConfig) {
 	// Expected: head.srv, top.srv, nav.srv, foot.srv + any files listed in srvsite.toml
 
 	setSecurityHeaders(w)
+
+	// When served under a subdirectory (base_path in srvsite.toml), strip that
+	// prefix so page matching and generated links stay correct behind a proxy
+	// that forwards the full path.
+	localPath := r.URL.Path
+	if cfg.BasePath != "" {
+		localPath = strings.TrimPrefix(localPath, cfg.BasePath)
+		if localPath == "" {
+			localPath = "/"
+		}
+	}
 
 	head := fileToStr("head.srv")
 	top := fileToStr("top.srv")
@@ -144,7 +157,7 @@ func drawPage(w http.ResponseWriter, r *http.Request, cfg SiteConfig) {
 	is404 := true
 	// The template has .Active conditional that highlights nav tab for the page we're on.
 	for i := range data.Options {
-		if r.URL.Path == data.Options[i].URL {
+		if localPath == strings.TrimPrefix(data.Options[i].URL, cfg.BasePath) {
 			data.Title = data.Options[i].Name
 			data.Options[i].Active = true
 			is404 = false
@@ -155,7 +168,7 @@ func drawPage(w http.ResponseWriter, r *http.Request, cfg SiteConfig) {
 			// Pages under a login (e.g. the members /studio page) are only
 			// served to a valid session. A guest gets a plain 404, so the
 			// page's existence is not advertised.
-			if r.URL.Path == "/studio" && !loggedIn {
+			if localPath == "/studio" && !loggedIn {
 				is404 = true
 			}
 		}
@@ -406,7 +419,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 		SameSite: http.SameSiteStrictMode,
 		MaxAge:   -1,
 	})
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, siteCfg.BasePath+"/", http.StatusSeeOther)
 }
 
 //===== SESSION PERSISTENCE
@@ -695,6 +708,7 @@ type SiteConfig struct {
 	Port       int          `toml:"port"`
 	SiteTitle  string       `toml:"site_title"`
 	LeadsEmail string       `toml:"leads_email"` // where contact-form notifications are sent
+	BasePath   string       `toml:"base_path"`    // optional URL prefix when served under a subdirectory
 	Pages      []PageConfig `toml:"pages"`
 }
 
@@ -995,11 +1009,22 @@ func main() {
 
 	// This dir contains images, style.css, javascript, etc.
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+	// When served under a subdirectory (base_path), also expose assets at the
+	// prefixed path so absolute asset URLs resolve through the proxy.
+	if cfg.BasePath != "" {
+		http.Handle(cfg.BasePath+"/assets/", http.StripPrefix(cfg.BasePath+"/assets/", http.FileServer(http.Dir("assets"))))
+	}
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		drawPage(w, r, cfg)
 	})
 	http.HandleFunc("/form", handleForm) // AJAX requests we send from forms.
 	http.HandleFunc("/logout", logout)
+	// Also serve the AJAX endpoints under the base path, since relative URLs
+	// on a page served from a subdirectory resolve to that prefix.
+	if cfg.BasePath != "" {
+		http.HandleFunc(cfg.BasePath+"/form", handleForm)
+		http.HandleFunc(cfg.BasePath+"/logout", logout)
+	}
 
 	// Sleep to avoid error "bind: address already in use" -- sleeps once, not per pageview.
 	time.Sleep(time.Millisecond * 100)

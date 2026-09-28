@@ -23,6 +23,11 @@ port = 7800
 # This is the <title> tag, rendered as {{.SiteTitle}}.
 site_title = "SRVsite"
 
+# Optional. Set this when the site is served from a subdirectory (for example
+# a proxy that forwards https://example.com/srvtest/ to this port). Links,
+# asset URLs and routing all get the prefix. Leave it "" to serve from "/".
+base_path = "/srvtest"
+
 # Where contact-form notifications are sent. When a visitor completes the
 # contact form, the engine mails the details here (subject:
 # "New message on <site_title>"). Leave it "" to disable email notifications

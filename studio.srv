@@ -33,7 +33,7 @@
 		Sessions persist across restarts in <code>sessions.json</code>.
 	</p>
 	<p>
-		<a class="pj-submit" href="/logout" style="display:inline-block;text-decoration:none;">Log out</a>
+		<a class="pj-submit" href="logout" style="display:inline-block;text-decoration:none;">Log out</a>
 	</p>
 	<p class="srv-gold">
 		For technical support or managed hosting, visit SRVpress.com.
