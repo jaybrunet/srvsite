@@ -708,7 +708,7 @@ type SiteConfig struct {
 	Port       int          `toml:"port"`
 	SiteTitle  string       `toml:"site_title"`
 	LeadsEmail string       `toml:"leads_email"` // where contact-form notifications are sent
-	BasePath   string       `toml:"base_path"`    // optional URL prefix when served under a subdirectory
+	BasePath   string       `toml:"base_path"`   // optional URL prefix when served under a subdirectory
 	Pages      []PageConfig `toml:"pages"`
 }
 
