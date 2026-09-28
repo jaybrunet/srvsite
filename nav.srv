@@ -1,0 +1,21 @@
+<div id="nav_dad">
+	<div id="navigation">
+			
+	{{range .Options}}
+		<div id="{{.Name}}" class="nav" {{if .Active}}style="background-color: #113;"{{end}}> 
+			<a href="{{.URL}}">{{.Name}}</a>
+		</div>
+	{{end}}
+	
+	</div>
+</div><!-- nav_dad -->
+
+<div id="main">
+
+	<div><!-- 1900 x 260 background image here--></div>
+
+	<div class="page-head srv-gold">
+		{{range .Options}}{{if .Active}}{{.PageHead}}{{end}}{{end}}
+	</div>
+
+</div> <!-- main -->

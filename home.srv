@@ -1,0 +1,124 @@
+<!--
+================================================================================
+ home.srv  --  the homepage (a plain page body)
+================================================================================
+ A plain .srv body is pasted, unchanged, into the #middle element of every
+ page. It may contain any HTML/CSS/JS. The page list and nav tabs come from
+ srvsite.toml; this file is only the body of the homepage.
+
+ It contains two forms:
+   * a "client key" login form (POSTs {"chat_0_login":"<key>"} to /form)
+   * a generic contact form (POSTs {"srvsite_contact":"<json>"} to /form)
+================================================================================
+-->
+
+<style>
+	#home-hero {
+		background-color: var(--ink-panel);
+		border-radius: 10px;
+		box-shadow: 0 10px 28px rgba(0,0,0,.45);
+		padding: 2em 1.5em;
+		margin: 1.5em 0;
+		color: var(--ink);
+	}
+	#home-hero h2 { margin-top: 0; }
+	#login-panel {
+		background-color: var(--brown-deep);
+		border-radius: 10px;
+		padding: 1.25em 1.5em;
+		margin: 1.5em 0;
+		color: var(--ink);
+	}
+	#contact-panel {
+		background-color: var(--ink-panel);
+		border-radius: 10px;
+		box-shadow: 0 10px 28px rgba(0,0,0,.45);
+		padding: 1.5em;
+		margin: 1.5em 0;
+		color: var(--ink);
+	}
+	.pj-input {
+		padding:.1em .4em;
+		border:none;
+		font-size: 1em;
+		color:black;
+		margin:.4em .2em;
+		background-color: var(--top-white);
+		height:1.5em;
+		border-radius:.4em;
+		outline: none;
+	}
+	.pj-submit {
+		border:none;
+		background-color:var(--sage);
+		padding:5px 15px;
+		margin:0;
+		border-radius:20px;
+		font-size:.9em;
+		color:black;
+		font-weight:bold;
+		cursor: pointer;
+	}
+	#contact-panel textarea {
+		display:block;
+		width: 100%;
+		min-height: 90px;
+		margin: .4em 0;
+		padding: .4em;
+		border: none;
+		border-radius: .4em;
+		font-family: inherit;
+		font-size: 1em;
+		background-color: var(--top-white);
+		color: black;
+		box-sizing: border-box;
+	}
+</style>
+
+<div id="home-hero">
+	<h2>SRVsite &middot; a tiny, database-free website engine</h2>
+	<p>
+		SRVsite is a small, self-contained website engine written in Go. It keeps
+		its configuration in <strong>TOML</strong>, its users in
+		<strong>users.json</strong> and its content in plain <strong>.srv</strong>
+		files &mdash; no database required. Adding a page is one
+		<code>[[pages]]</code> block in <code>srvsite.toml</code> plus a body file.
+	</p>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pages can carry
+		any HTML, CSS and JavaScript you like; a page may also name an optional
+		config file to become a data-driven page such as a blog.
+	</p>
+	<p class="srv-gold">
+		For technical support or managed hosting, visit SRVpress.com.
+	</p>
+</div>
+
+<!-- ===================== client-key login ===================== -->
+<div id="login-panel">
+	<form id="license-login-form" style="border:0;">
+		<strong class="srv-gold">Client login</strong>
+		<div style="font-size:16px; margin-top:.5em;">
+			<em>Client key</em>
+			<input id="license-input" type="text" placeholder="DEMO0001-00000000-00000000-00000001" value="" maxlength="35" class="pj-input" />
+			<input id="license-submit-input" type="button" value="Login" class="pj-submit" />
+			<div style="display:none;color:#E88;">That key was not accepted.</div>
+		</div>
+	</form>
+	<div style="font-size:13px;color:var(--dim);margin-top:.6em;">
+		A valid key opens the members page (<code>/studio</code>). The demo keys
+		shipped with this project are listed in <code>README.md</code>.
+	</div>
+</div>
+
+<!-- ===================== contact form ===================== -->
+<div id="contact-panel">
+	<h3>Get in touch</h3>
+	<form id="contact-form" style="border:0;">
+		<input id="contact-name" type="text" placeholder="your name" class="pj-input" style="width:14em;" />
+		<input id="contact-email" type="email" placeholder="you@example.com" class="pj-input" style="width:14em;" />
+		<textarea id="contact-message" placeholder="how can we help?"></textarea>
+		<input id="contact-submit" type="button" value="Send" class="pj-submit" />
+		<span id="contact-done" style="display:none;color:var(--sage);margin-left:.6em;">Thanks, message sent.</span>
+	</form>
+</div>

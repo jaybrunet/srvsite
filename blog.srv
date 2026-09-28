@@ -1,0 +1,262 @@
+<!--
+================================================================================
+ blog.srv  --  the blog page (page CSS only)
+================================================================================
+
+ The blog's POSTS (title, date, author, image, audio, excerpt, and the body
+ file for each post) live in the page-specific config file "blog.toml", which
+ is named by the /blog [[pages]] block in srvsite.toml.
+
+ srvsite.go recognises blog.toml as a BLOG config (because it contains a
+ [[posts]] array) and GENERATES the whole blog below this CSS: the post
+ reader, the preview cards, and the small runtime script that swaps them.
+ This keeps the design in Go (server-side) and the data in TOML.
+
+ To add a post, edit blog.toml -- see the instructions at the top of it.
+ The CSS below still styles everything srvsite.go emits.
+================================================================================
+-->
+
+<style>
+	/* ---- Blog: container & intro ---- */
+	#content-lower {
+		padding: 15px 15px 30px 15px;
+		background-color: var(--ink-panel);
+	}
+
+	#blog-intro {
+		padding: 4px 2px 18px 2px;
+		color: var(--dim);
+		font-size: 15px;
+		line-height: 1.5;
+	}
+
+	#blog-intro a {
+		color: var(--gold);
+		transition: color .15s, border-color .15s;
+	}
+
+	#blog-intro a:hover {
+		color: var(--cream);
+		border-color: var(--cream);
+	}
+
+	/* ---- Blog: the full post reader ---- */
+	#post-reader {
+		background-color: var(--brown-deep);
+		border: 1px solid var(--navy);
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+		margin-bottom: 34px;
+	}
+
+	#post-hero {
+		width: 100%;
+		aspect-ratio: 1200 / 650;
+		min-height: 220px;
+		background-size: cover;
+		background-position: center;
+		position: relative;
+	}
+
+	#post-hero .hero-inner {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		padding: 1em;
+		box-sizing: border-box;
+		background: linear-gradient(to top, rgba(13, 13, 16, 0.8) 0%, rgba(13, 13, 16, 0.3) 25%, rgba(13, 13, 16, 0.3) 100%);
+	}
+
+	#post-hero h1 {
+		margin: 0;
+		color: var(--gold);
+		font-size: 34px;
+		line-height: 1.22;
+		text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
+		font-family: 'Vesper Libre', Serif;
+		letter-spacing: .2px;
+	}
+
+	#post-byline {
+		padding: 15px 28px 4px 20px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		color: var(--gold);
+		font-size: .85em;
+		letter-spacing: .5px;
+	}
+
+	/* Minimal, self-explanatory audio control. Only rendered when a post
+	   actually has an 'audio' file. */
+	.audio-btn {
+		background: none;
+		border: 0;
+		margin: 0;
+		padding: 2px 0;
+		color: var(--gold);
+		font-family: 'Vesper Libre', Serif;
+		font-size: 13px;
+		letter-spacing: .4px;
+		cursor: pointer;
+		transition: color .15s;
+	}
+
+	.audio-btn:hover {
+		color: var(--cream);
+	}
+
+	.audio-btn:focus-visible {
+		outline: 1px dotted var(--gold);
+		outline-offset: 2px;
+	}
+
+	#post-content {
+		padding: 18px 28px 28px 28px;
+		color: var(--ink);
+		font-size: 17px;
+		line-height: 1.82;
+	}
+
+	#post-content p {
+		margin: 0 0 1.25em 0;
+	}
+
+	#post-content p:first-child {
+		color: var(--cream);
+	}
+
+	#post-content p:last-child {
+		margin-bottom: 0;
+	}
+
+	#post-author {
+		margin-top: 26px;
+		padding-top: 16px;
+		border-top: 1px solid var(--walnut);
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+		color: var(--dim);
+		font-size: 13.5px;
+		line-height: 1.6;
+	}
+
+	#post-author a {
+		color: var(--ink);
+		transition: color .15s, border-color .15s;
+	}
+
+	#post-author a:hover {
+		color: var(--gold);
+	}
+
+	/* ---- Blog: preview cards section (under the post reader) ---- */
+	#post-grid-section {
+		margin-top: 10px;
+	}
+
+	#post-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		margin: 0 0 24px 0;
+	}
+
+	.post-card {
+		width: calc(50% - 9px);
+		min-width: 220px;
+		box-sizing: border-box;
+		background-color: var(--brown-deep);
+		border: 1px solid var(--navy);
+		border-radius: 7px;
+		overflow: hidden;
+		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		transition: border-color .18s, transform .18s, box-shadow .18s;
+	}
+
+	.post-card:hover {
+		transform: translateY(-2px);
+		border-color: var(--walnut);
+		box-shadow: 0 3px 10px rgba(0, 0, 0, .30);
+	}
+
+	.post-card.active {
+		border-color: var(--gold);
+		box-shadow: 0 0 0 1px var(--gold) inset, 0 4px 16px rgba(var(--gold-rgb), 0.18);
+	}
+
+	.post-card .thumb {
+		width: 100%;
+		aspect-ratio: 1200 / 650;
+		background-size: cover;
+		background-position: center;
+		position: relative;
+	}
+
+	.post-card .thumb .thumb-title {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: flex-end;
+		padding: 10px 12px;
+		box-sizing: border-box;
+		font-weight: bold;
+		font-size: 1.5em;
+		line-height: 1.3;
+		font-family: 'Vesper Libre', Serif;
+		color: var(--gold);
+		text-shadow: 0 1px 6px rgba(0,0,0,.95);
+		background: linear-gradient(to top, rgba(16, 13, 12, 0.8) 0%, rgba(16, 13, 12, 0.3) 25%, rgba(16, 13, 12, 0.3) 100%);
+	}
+
+	.post-card .card-body {
+		padding: 11px 12px 14px 12px;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+	}
+
+	.post-card .card-date {
+		color: var(--dim);
+		font-size: 11px;
+		letter-spacing: .6px;
+		text-transform: uppercase;
+		margin-bottom: 6px;
+	}
+
+	.post-card .card-excerpt {
+		color: var(--ink);
+		font-size: .9em;
+		line-height: 1.45;
+		flex-grow: 1;
+	}
+
+	.post-card .card-action {
+		margin-top: 10px;
+		color: var(--sage);
+		font-size: 12px;
+		letter-spacing: .3px;
+		font-weight: bold;
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.post-card.active .card-action {
+		color: var(--cream);
+	}
+
+	@media (max-width: 760px) {
+		.post-card { width: 100%; }
+		#post-content { padding: 14px 20px 22px 20px; font-size: 16px; }
+	}
+</style>

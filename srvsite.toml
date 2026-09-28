@@ -1,0 +1,55 @@
+# ============================================================================
+#  srvsite.toml - configuration for the SRVsite website engine
+# ============================================================================
+#  HOW TO ADD A NEW PAGE (and its navigation tab):
+#
+#  Copy one of the [[pages]] blocks below and change four lines:
+#     url       = the address in the browser, e.g. "url = \"/blog\""
+#     name      = the label shown in the top navigation, e.g. "Blog"
+#     page_head = the big heading on the page, e.g. "My Blog"
+#     pick_file = the HTML file that becomes the page body, e.g. "blog.srv"
+#
+#  The FIRST [[pages]] entry is the homepage ("/"). Order matters: pages
+#  appear in the navigation in the same order they appear in this file.
+#
+#  The app restarts automatically when you save this file if you run it
+#  under "entr" (see README.md).
+# ============================================================================
+
+# Port the app listens on. Behind a reverse proxy, the proxy forwards to this
+# port and terminates HTTPS for us.
+port = 7800
+
+# This is the <title> tag, rendered as {{.SiteTitle}}.
+site_title = "SRVsite"
+
+# Where contact-form notifications are sent. When a visitor completes the
+# contact form, the engine mails the details here (subject:
+# "New message on <site_title>"). Leave it "" to disable email notifications
+# (the submission is still appended to leads.json). This needs a local mail
+# command ("mail -s ..."), e.g. from the mailx package.
+leads_email = ""
+
+# --- Pages -------------------------------------------------------------------
+# Each [[pages]] block adds one page + one navigation tab.
+
+[[pages]]
+url       = "/"
+name      = "Home"
+page_head = "Welcome"
+pick_file = "home.srv"
+
+[[pages]]
+url       = "/blog"
+name      = "Blog"
+page_head = "Blog"
+pick_file = "blog.srv"
+# Optional page-specific config. Its shape (a [[posts]] array) tells srvsite.go
+# this page is a BLOG, so the post cards + reader are generated from it.
+config    = "blog.toml"
+
+[[pages]]
+url       = "/studio"
+name      = "Studio"
+page_head = "Studio"
+pick_file = "studio.srv"

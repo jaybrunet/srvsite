@@ -1,0 +1,41 @@
+<!--
+================================================================================
+ studio.srv  --  the members page (served only to a valid session)
+================================================================================
+ Reaching this page requires a valid session cookie, set by logging in with a
+ client key on the homepage. A guest is given a plain 404 (see srvsite.go), so
+ the page's existence is not advertised.
+
+ This page is deliberately minimal: it proves the session works and is a
+ natural home for members-only tooling.
+================================================================================
+-->
+
+<style>
+	#studio-wrap {
+		background-color: var(--ink-panel);
+		border-radius: 10px;
+		box-shadow: 0 10px 28px rgba(0,0,0,.45);
+		padding: 1.5em;
+		margin: 1.5em 0;
+		color: var(--ink);
+	}
+</style>
+
+<div id="studio-wrap">
+	<h2>Members area</h2>
+	<p>
+		You are signed in. This page is only served to a valid session; a guest
+		requesting <code>/studio</code> receives a 404.
+	</p>
+	<p>
+		Identity is carried by an HttpOnly session cookie, never by the URL.
+		Sessions persist across restarts in <code>sessions.json</code>.
+	</p>
+	<p>
+		<a class="pj-submit" href="/logout" style="display:inline-block;text-decoration:none;">Log out</a>
+	</p>
+	<p class="srv-gold">
+		For technical support or managed hosting, visit SRVpress.com.
+	</p>
+</div>

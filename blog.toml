@@ -1,0 +1,64 @@
+# ============================================================================
+#  blog.toml -- page-specific config for the /blog page
+# ============================================================================
+#  This file is named by the "config" key of the /blog [[pages]] block in
+#  srvsite.toml. srvsite.go recognises it as a BLOG config because it contains
+#  a [[posts]] array (that array is the "signature" of a blog page). To add a
+#  different KIND of page in the future, give its page a config file with a
+#  different signature array (e.g. [[faqs]] for a FAQ page).
+#
+#  HOW TO ADD A BLOG POST
+#  ----------------------
+#  Copy one [[posts]] block below and edit the fields. Newest post goes FIRST
+#  (it is shown by default).
+#
+#    id      : short, unique, lowercase nickname (no spaces). Used in the URL
+#              hash so you can link straight to a post, e.g. /blog#id
+#    title   : the headline of the post
+#    date    : any text you like, e.g. "March 4, 2026"
+#    author  : the byline author
+#    image   : OPTIONAL. Path to the title image, e.g. "assets/my-photo.jpg".
+#              Leave it "" (empty) and a gradient is drawn instead.
+#    audio   : OPTIONAL. Path/URL to an MP3 narration, e.g. "assets/my-post.mp3".
+#              Leave it "" (empty) and no audio control is shown.
+#    excerpt : 1-2 sentences shown on the preview card
+#    file    : the post BODY, relative to content_dir below. It is plain HTML
+#              (any HTML/CSS/JS is allowed -- NOT markdown): wrap each
+#              paragraph in <p> ... </p>.
+#
+#  content_dir is prepended to every post's "file" path, so bodies live in a
+#  "blog" subdirectory by default.
+# ============================================================================
+
+# Directory that holds the post body files (relative path).
+content_dir = "blog"
+
+# HTML shown above the reader (small intro line). May contain HTML, e.g. links.
+intro = """<strong>
+		Notes and updates from the SRVsite project.
+		</strong>"""
+
+# HTML shown beneath every post (the author box). May contain HTML.
+author_bio = """<div>SRVsite is a small, database-free website engine. This sample blog shows how a page can be generated from a page-specific config file: the posts below are rendered by the server from <code>blog.toml</code> and the files in <code>blog/</code>.</div>"""
+
+# --- Posts (newest first) ---------------------------------------------------
+
+[[posts]]
+id      = "welcome"
+title   = "Welcome to the SRVsite blog"
+date    = "March 4, 2026"
+author  = "The SRVsite Project"
+image   = ""
+audio   = ""
+excerpt = "This page is generated entirely by the server from a config file and a set of plain HTML post bodies. No database, no build step."
+file    = "welcome.html"
+
+[[posts]]
+id      = "adding-a-page"
+title   = "Adding a page is one config block"
+date    = "February 18, 2026"
+author  = "The SRVsite Project"
+image   = ""
+audio   = ""
+excerpt = "Pages and their navigation tabs come from srvsite.toml. Add a [[pages]] block, point it at a body file, and the tab appears."
+file    = "adding-a-page.html"

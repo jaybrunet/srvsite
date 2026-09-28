@@ -1,0 +1,16 @@
+<div id="footer1">
+
+	<div class="bottom-contact-row">
+		<div style="padding-top:12px;">
+			<small class="srv-gold">SRVsite</small>
+			A tiny, database-free website engine.
+		</div>
+
+		<div style="padding-top:12px;">
+			<small class="srv-gold">Support</small>
+			For technical support or managed hosting, visit
+			<a href="https://srvpress.com" target="_blank" rel="noopener">SRVpress.com</a>
+		</div>
+	</div>
+
+</div><!-- end #footer1 -->

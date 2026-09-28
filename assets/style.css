@@ -1,0 +1,339 @@
+/* ===================================================================
+   SRVSITE COLOUR PALETTE  --  the single source of truth.
+   -------------------------------------------------------------------
+   Every colour on the site is named here and nowhere else. To retune
+   the whole site, change a value below; pages and pages' inline styles
+   reference these names (var(--...)), never the raw hex.
+   design.md lists the roles; this file owns the values.
+   =================================================================== */
+:root {
+	--brown:      #342A23;   /* warm brown ground (the #middle background)  */
+	--brown-deep: #2C241F;   /* darker brown ground (panels)                */
+	--navy:       #292940;   /* structural navy (nav bars, panels)          */
+	--walnut:     #6B4C34;   /* borders, secondary                          */
+	--sage:       #9EB8B5;   /* rare, natural accent (a mark, a tick)       */
+	--gold:       #DB8;      /* the one accent                              */
+	--cream:      #F2E5D0;   /* primary text on dark                        */
+	--ink:        #C8BCB0;   /* body text on brown                          */
+	--dim:        #A89688;   /* muted text                                  */
+	--ink-panel:  #1A1A1E;   /* optional background for text */
+	--top-white:  #DDD;      /* for #top & form fields */
+
+	/* rgb companions, for rgba() tints of the same colours */
+	--brown-rgb:      52,42,35;
+	--brown-deep-rgb: 44,36,31;
+	--navy-rgb:       41,41,64;
+	--walnut-rgb:     107,76,52;
+	--sage-rgb:       143,163,138;
+	--gold-rgb:       221,187,136;
+	--cream-rgb:      242,229,208;
+	--ink-panel-rgb:  23,23,30;
+}
+
+/* --- head.srv --- */
+
+html, body { 
+	background-color: black;
+	margin: 0;
+	padding: 0;
+	color: #442211;
+	font-family: 'Vesper Libre', Serif;
+}
+
+a { text-decoration: none; }
+
+#top, #nav_dad, #main, #middle, #sales-pitch, #email-signup, #footer1, #footer2 { 
+	margin: auto; 
+	min-width: 500px; /* viewport should match */
+	max-width: 950px;
+}
+
+pre { font-size:14px; }
+
+h2 { 
+	line-height: 150%;
+	margin-top: 0;
+	text-shadow: 1px 1px 5px black;
+	color: var(--gold); 
+}
+
+h3 {
+	font-size: 1.1em;
+	line-height: 140%;
+	margin-top: 0;
+	text-shadow: 1px 1px 5px black;
+	color: var(--cream); 
+}
+
+blockquote { 
+	font-style: italic; 
+	font-weight: bold;
+	z-index: +1;
+	position:relative;
+	color: var(--cream);
+}
+
+blockquote:before {
+	content: '\201C';
+	position: absolute;
+	color: var(--gold);
+	font-size: 6em;
+	opacity: 0.4;
+	left: -0.25em;
+	top: +0.25em;
+	z-index: -1;
+}
+
+/* --- top.srv --- */
+
+#top { 
+	background-color: var(--top-white);
+	text-size-adjust: none;
+	height: 100px;
+ }
+
+	#logo-area { 
+		float:left;
+		margin: 21px 20px 0px 20px;
+		line-height:0; 
+	}
+
+	#contact-row {
+		float:left;
+		margin: 26px 0 0 0;
+	}
+
+		#contact-row > div { 
+			white-space:nowrap;
+		}
+
+/* --- nav.srv --- */
+
+#Studio.nav { display:none; }
+
+#nav_dad {
+	clear:both;
+	background-color: var(--navy);
+	overflow:auto;
+}
+
+#navigation {
+	color:black;
+	color:#408058;
+	margin:auto;
+	width:95%;
+}
+
+	#navigation div.nav :hover { 
+		background-color:#445; 
+	}
+	
+	#navigation div a { 
+		outline:none;
+		color:white;
+		text-decoration:none;
+	}
+
+div.nav {
+	float:left;
+	font-size: 17px;
+	margin:0;
+	padding: 10px 10px 5px 10px;
+	line-height:30px;
+	height:34px;
+	font-family: arial, sans-serif;
+	font-weight: 600;
+	text-shadow: 1px 1px 5px black;
+}
+
+div.nav a { 
+	padding: 9px 18px 9px 18px;
+	margin: -9px;
+	position: relative;
+	display: inline-block;
+	z-index: 1;
+}
+
+div.nav a:hover { 
+	text-shadow: 1px 1px 5px black;
+}
+
+#main {
+	--main-height: 200px; 
+	height: var(--main-height);
+	width:100%;
+	clear:both;
+	padding:0;
+}
+	
+	/* the hero photograph: an inset card with the same soft shadow and
+	   rounded corners the blog panels use. #main keeps its height so the
+	   page-head badge below it does not shift; the picture sits centred
+	   in that space. */
+	#main div:first-child { 
+		height: var(--main-height);
+		background-size:cover;
+		background-position:right center;
+		background-image:linear-gradient(135deg, var(--navy), var(--brown-deep));
+		box-shadow: 0 10px 28px rgba(0,0,0,.5);
+	}
+
+#content-lower {
+	padding: 15px;
+	line-height:160%;
+	hyphens:auto;
+}
+
+	div#content-lower a { 
+		text-decoration:none;
+		color: var(--dim); 
+	}
+	
+	div#content-lower a:hover { 
+		text-decoration:underline;
+		color: var(--gold); 
+	}
+
+#middle {
+	clear:both;
+	overflow:hidden;	
+	color: var(--ink);
+	font-size:17px;
+	font-family:arial;
+	background-color: var(--brown);
+	text-size-adjust: none;
+}
+
+/*	#middle > div {
+		float:left; 
+		width: calc(100% - 60px); 
+	} */
+
+/* Optional background for a block of text: rgb(23,23,30). Dark, cool and
+   quiet, so body copy stays legible over a busy photograph or the brown
+   ground. The hero badge (#main .page-head) already uses the same colour
+   as an overlay; #sales-pitch and #email-signup use it as a full panel.
+   Use .srv-panel on a paragraph/callout that needs its own ground. */
+.srv-panel {
+	background-color: var(--ink-panel);
+	border-radius: 8px;
+	padding: .8em 1em;
+	box-shadow: 0 6px 18px rgba(0,0,0,.4);
+}
+
+.page-head {	
+	font-size:23px;
+	line-height:23px;
+	padding: 22px 25px 12px 25px;
+	position: relative;
+	top: -57px;	
+	text-shadow: 0 0 10px #001;
+	white-space: nowrap;
+	font-weight: bold;
+	background: rgba(0,0,1,0.7);
+	display:inline-block;
+	border-top-right-radius: 7px;
+}
+
+li { 
+	margin: 0 0 1em -1em; /* Todo: check if this is really necessary. */
+}
+
+.bottom-nav * { 
+	padding:30px 10px;
+	color: var(--gold);
+	font-size: 1.9em;
+	font-weight:normal;
+}
+
+.srv-gold { 
+	color: var(--gold);
+	font-weight:bold;
+	font-family: 'Vesper Libre', Serif;
+}
+
+.srv-box { 
+	font-weight:bold;
+	background-color: var(--navy);
+	display:inline-block;
+	padding:.5em .8em; 
+	border-radius: 5px;
+}
+
+.box-left { 
+	float:left;
+	margin:0 .8em 0 -.8em; 
+}
+
+/* @media (max-width: 600px) { #float-img-home { display:none; } } */
+
+#float-img-home {
+	float:right;
+	margin:2% 0 1% 3%;
+	width:25%;
+	border-radius:5px;
+	/* filter:brightness(95%) saturate(80%); */
+}
+
+/* --- foot.srv --- */
+
+#sales-pitch {
+	overflow:hidden;
+	background-color: var(--ink-panel);
+	font-family: arial, sans-serif;
+	padding: 2em 0;
+	text-size-adjust: none;
+}
+
+#email-signup {
+	clear: both;
+	font-weight: bold;
+	background-color: var(--ink-panel);
+	color: var(--gold);
+	font-family: arial, sans-serif;
+	padding: 2em 0;
+	margin: 18px auto;
+	width: 88%;
+	border-radius: 10px;
+	box-shadow: 0 10px 28px rgba(0,0,0,.45);
+}
+
+#footer1 { 
+	border-radius: 0 0 7px 7px;
+	clear:both;
+	background-color: var(--navy);
+	overflow:hidden;
+} 
+
+.bottom-contact-row {
+	padding: 29px 0 0 1.5em;
+	margin: auto;
+	/* background-size:cover;
+	background-position:center center;
+	background-image:url(compass.jpg); */
+	float:left;
+}
+
+.bottom-contact-row > div { 
+	font-size: 16px; /* 1.4em */
+	line-height: 24px; /* 1.5em */
+	white-space:nowrap;
+	font-weight:bold;
+	font-family:monospace;
+	color: #CCC;
+	text-shadow: 1px 1px 5px black;
+	margin-top: .3em;
+	clear: both;
+}
+
+/* --- srvsite --- */
+
+/* Text logo used by top.srv (the open-source version ships no image logo). */
+.site-mark {
+	font-family: 'Vesper Libre', Serif;
+	font-weight: bold;
+	font-size: 34px;
+	letter-spacing: 1px;
+	color: var(--navy);
+	line-height: 68px;
+}

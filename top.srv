@@ -1,0 +1,15 @@
+<body>
+<div id="top">
+	<div id="logo-area">
+		<a href="/"><span class="site-mark">{{.SiteTitle}}</span></a>
+	</div>
+
+	<div id="contact-row">
+		<div style="line-height:160%;font-weight:bold;font-family:Arial,sans-serif;">
+			<span style="font-size:1.1em;">A tiny, database-free website engine</span>
+			<br />
+			<span style="font-size:.85em;color:#777;">Version 0.8 &middot; GPLv2 &middot; no warranty</span>
+		</div>
+	</div>
+</div>
+<!-- end top -->

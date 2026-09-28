@@ -1,0 +1,18 @@
+# Session store: holds raw session tokens. Secret. Do not commit.
+sessions.json
+sessions.json.tmp
+
+# Log files written at runtime.
+login.log
+contact.log
+*.log
+
+# Contact-form submissions (contains personal data).
+leads.json
+
+# Compiled binary and local scratch.
+/srvsite
+/tmp/
+
+# Internal notes: not part of the public repo.
+feature-ideas.md
