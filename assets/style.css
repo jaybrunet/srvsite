@@ -40,7 +40,10 @@ html, body {
 	font-family: 'Vesper Libre', Serif;
 }
 
-a { text-decoration: none; }
+a { 
+	text-decoration: none;
+	color: var(--sage);
+}
 
 #top, #nav_dad, #main, #middle, #sales-pitch, #email-signup, #footer1, #footer2 { 
 	margin: auto; 
@@ -175,6 +178,7 @@ div.nav a:hover {
 		background-size:cover;
 		background-position:right center;
 		background-image:linear-gradient(135deg, var(--navy), var(--brown-deep));
+		background-image:url(reception.jpg);
 		box-shadow: 0 10px 28px rgba(0,0,0,.5);
 	}
 
@@ -306,7 +310,7 @@ li {
 } 
 
 .bottom-contact-row {
-	padding: 29px 0 0 1.5em;
+	padding: 2em 0 2em 1.5em;
 	margin: auto;
 	/* background-size:cover;
 	background-position:center center;
