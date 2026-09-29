@@ -50,7 +50,7 @@ date    = "September 28, 2026"
 author  = "Jay Brunet"
 image   = "https://srvpress.com/assets/35mm-photo-of-texas-hiker-with-hat-sitting-at-a-pa-1200x800.jpg"
 audio   = ""
-excerpt = "Tonight I am open-sourcing SRVsite: why I left WordPress behind, how the project evolved from a single HTML/JS file to Go, and why simplicity scales."
+excerpt = "Tonight I'm open-sourcing SRVsite: how the project evolved from a single HTML/JS file to Go, and why simplicity scales."
 file    = "from-the-author.html"
 
 [[posts]]
