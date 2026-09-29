@@ -15,6 +15,13 @@ is one `[[pages]]` block in `srvsite.toml` plus a body file.
 
 ---
 
+## Screenshot
+
+![The SRVsite homepage](assets/Screenshot_2026-09-29.jpg)
+
+The homepage rendered by SRVsite: config-driven pages, the client-key login
+and the generic contact form.
+
 ## Purpose
 
 SRVsite renders every page at request time by concatenating a handful of

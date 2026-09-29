@@ -23,20 +23,40 @@
 		line-height:1.5em;
 	}
 	#home-hero h2 { margin-top: 0; }
+	#home-post-promo {
+		border-left: 4px solid var(--walnut);
+		border-radius: 8px;
+		padding: 1em 1.25em;
+		margin: 1.5em 0 0 0;
+		color: var(--ink);
+	}
+	#home-post-promo .promo-label {
+		color: var(--gold);
+		font-weight: bold;
+		letter-spacing: .4px;
+		margin-bottom: .35em;
+	}
+	#home-post-promo p { margin: .5em 0 0 0; }
+	#home-post-promo a.pj-submit {
+		display: inline-block;
+		text-decoration: none;
+	}
 	#login-panel {
 		background-color: var(--brown-deep);
 		border-radius: 10px;
 		padding: 1.25em 1.5em;
 		margin: 1.5em 1em;
 		color: var(--ink);
+		width: 70%;
 	}
 	#contact-panel {
 		background-color: var(--ink-panel);
 		border-radius: 10px;
 		box-shadow: 0 10px 28px rgba(0,0,0,.45);
-		padding: 1.5em;
+		padding: 1em;
 		margin: 1.5em 1em;
 		color: var(--ink);
+		width: 70%;
 	}
 	.pj-input {
 		padding:.1em .4em;
@@ -64,7 +84,7 @@
 		display:block;
 		width: 100%;
 		min-height: 90px;
-		margin: .4em 0;
+		margin: .2em 0 .5em .2em;
 		padding: .4em;
 		border: none;
 		border-radius: .4em;
@@ -78,61 +98,6 @@
 
 <div id="home-hero">
 	<h2>SRVsite &middot; a tiny, database-free website engine</h2>
-	<p style="color: var(--dim);">
-		<small><strong>From the author:</strong></small>
-
-		<em>
-		<br /><br />Tonight I'm open-sourcing SRVsite. Here's a <a href="https://srvpress.com/srvtest/">very basic demo</a> of 
-		the open source version of SRVsite. And here's the Github repository: <a href="https://github.com/jaybrunet/srvsite">https://github.com/jaybrunet/srvsite</a>
-
-		<br /><br />I started on the original idea around 2007, because I was frustrated with the speed and
-		complexity of WordPress. Originally this was a single HTML/Javscript file that rendered all the pages. The SPA 
-		(Single-Page Application) paradigm lasted a few years, until everyone realized it didn't scale well, and
-		arguably it wasn't very SEO friendly. Still I wanted a simple website that rendered instantly without
-		a database. Simplicity scales, complexity fails!
-
-		<br /><br />I never really wanted to be a database administrator, but as a WordPress system admin, that's just
-		part of the job description now. With SRVsite there's no database to install, or import, or export, and no 
-		InnoDB RAM to allocate. It's just easier to manage year after year.
-		
-		<br /><br />Still hooked on the basic idea, I started over again using <a href="https://nodejs.org">Node</a>. 
-		But by 2020 I found the event-driven nature of Javascript was too unpredictable and clumsy. 
-		Eventually I started using Go, a straighforward language that runs everything in order sequentially. 
-		SRVsite was born, the software underlying the <a href="https://srvpress.com">SRVpress</a> website.
-
-		<br /><br />The beauty of Go, it uses very little memory compared to PHP, and you don't need many dependencies, 
-		and there are few moving parts compared to the old WordPress LEMP stack. Working with WordPress intimately for decades 
-		professionally as a blogger, as a web developer, and as a system admin, the pain is always in the complexity, 
-		especially when it comes to migrations. Nobody likes migrations, except maybe sales people!
-
-		<br /><br />Recently, <a href="https://frankenphp.dev/">FrankenPHP</a> (also written in Go) reduced the
-		stack complexity for WordPress admins, completely eliminating the need for PHP-FPM. Yet the WordPress codebase is 
-		still enormous, unwieldy and difficult to build on. My original intention was to have SRVsite run without 
-		Nginx, simplifying installation further. But now I prefer using <a href="https://caddyserver.com/">Caddy</a> (instead
-		of Nginx) because it handles https certificate renwals automatically. FWIW 
-		<a href="https://certbot.eff.org/">Certbot</a> is fantastic, but with Caddy you don't even need to think about 
-		certificates. If you need help configuring Caddy, and/or would like me to configure your SRVsite server, let me know.
-		
-		<br /><br />The way I designed SRVsite, you can easily edit pages "in production" without rebuilding or
-		recompiling anything. See changes instantly. If you want, you *can* use a separate development environment and 
-		just upload your .srv files when you're ready to deploy them, but it's not a necessity. 
-		
-		<br /><br />In my professional opinion, this is better than "static website" generators that require an extra "build" 
-		step, and then you stuggle with nagivation. With SRVsite, basic navigation is automatic. The way I see it, static pages 
-		are a big step backwards. Let's move forward. SRVsite is the best of both worlds, you get the simplicity and speed 
-		of static pages, with the intelligence and extensibility of a modern programming language.
-
-		<br /><br />And now that we have AI, SRVsite is even more attractive. Because
-		the codebase is so tiny, AI agents can digest it in seconds and create just about anything you want. Building upon 
-		a smaller foundation is generally smarter (fewer tokens) than refactoring a huge application like WordPress, which 
-		is prone to break and burn through all your inference tokens. Let me know if you use SRVsite as a foundation for 
-		building websites with AI!
-
-		<br /><br /><a href="https://PJBrunet.com">Jay Brunet</a> -- September 28, 2026
-		<br /><br />
-
-		</em>
-		
 	<p>
 		SRVsite is a small, self-contained website engine written in Go. It keeps
 		its configuration in <strong>TOML</strong>, its users in
@@ -147,13 +112,24 @@
 	<p class="srv-gold">
 		For technical support or managed hosting, visit <a href="https://srvpress.com">SRVpress.com</a>
 	</p>
+
+	<div id="home-post-promo">
+		<div class="promo-label">From the author</div>
+		<p>
+			The long road from a single HTML/JS file to Go,
+			<br />and why I believe
+			simplicity scales.
+		</p>
+		<p style="margin-top:1em;">
+			<a class="pj-submit" href="blog#from-the-author">Read the letter</a>
+		</p>
+	</div>
 </div>
 
 <!-- ===================== client-key login ===================== -->
 <div id="login-panel">
 	<form id="license-login-form" style="border:0;">
-		<strong class="srv-gold">Client login</strong>
-		<div style="font-size:16px; margin-top:.5em;">
+		<div style="font-size:16px;">
 			<em>Client key</em>
 			<input id="license-input" type="text" placeholder="DEMO0001-00000000-00000000-00000001" value="" maxlength="35" class="pj-input" />
 			<input id="license-submit-input" type="button" value="Login" class="pj-submit" />
@@ -168,7 +144,7 @@
 
 <!-- ===================== contact form ===================== -->
 <div id="contact-panel">
-	<h3>Get in touch</h3>
+	<strong class="srv-gold">Get in touch</strong>
 	<form id="contact-form" style="border:0;">
 		<input id="contact-name" type="text" placeholder="your name" class="pj-input" style="width:14em;" />
 		<input id="contact-email" type="email" placeholder="you@example.com" class="pj-input" style="width:14em;" />

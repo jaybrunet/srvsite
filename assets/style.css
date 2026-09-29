@@ -190,7 +190,7 @@ div.nav a:hover {
 
 	div#content-lower a { 
 		text-decoration:none;
-		color: var(--dim); 
+		color: var(--sage); 
 	}
 	
 	div#content-lower a:hover { 

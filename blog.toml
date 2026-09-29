@@ -44,6 +44,16 @@ author_bio = """<div>SRVsite is a small, database-free website engine. This samp
 # --- Posts (newest first) ---------------------------------------------------
 
 [[posts]]
+id      = "from-the-author"
+title   = "A letter from the author"
+date    = "September 28, 2026"
+author  = "Jay Brunet"
+image   = "https://srvpress.com/assets/35mm-photo-of-texas-hiker-with-hat-sitting-at-a-pa-1200x800.jpg"
+audio   = ""
+excerpt = "Tonight I am open-sourcing SRVsite: why I left WordPress behind, how the project evolved from a single HTML/JS file to Go, and why simplicity scales."
+file    = "from-the-author.html"
+
+[[posts]]
 id      = "welcome"
 title   = "Welcome to the SRVsite blog"
 date    = "March 4, 2026"
